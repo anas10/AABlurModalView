@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="AABlurModalView" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IMG_7342.JPG" translatesAutoresizingMaskIntoConstraints="NO" id="FjQ-6h-ief">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vKF-Es-54x">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="2Qr-pX-plD">
+                                        <rect key="frame" x="184" y="214" width="233" height="29"/>
+                                        <segments>
+                                            <segment title="Example 1"/>
+                                            <segment title="Example 2"/>
+                                            <segment title="Example 3"/>
+                                        </segments>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </segmentedControl>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.20301724137931035" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="2Qr-pX-plD" firstAttribute="centerX" secondItem="vKF-Es-54x" secondAttribute="centerX" id="RIC-QR-ULu"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R8S-Uo-nor">
+                                <rect key="frame" x="225" y="280" width="150" height="40"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="9fS-AQ-G0p"/>
+                                    <constraint firstAttribute="width" constant="150" id="fGn-16-kQw"/>
+                                </constraints>
+                                <state key="normal" title="Show modal"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="show:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZUn-Fb-0zg"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="R8S-Uo-nor" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="3Ax-9Q-fJ8"/>
+                            <constraint firstItem="vKF-Es-54x" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="DuT-Ld-aVD"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="FjQ-6h-ief" secondAttribute="bottom" id="EbS-9h-zAc"/>
+                            <constraint firstItem="R8S-Uo-nor" firstAttribute="top" secondItem="2Qr-pX-plD" secondAttribute="bottom" constant="38" id="FoI-Br-kcg"/>
+                            <constraint firstAttribute="trailing" secondItem="vKF-Es-54x" secondAttribute="trailing" id="Gdo-m2-uyC"/>
+                            <constraint firstItem="vKF-Es-54x" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-20" id="INC-KB-0Qu"/>
+                            <constraint firstAttribute="trailing" secondItem="FjQ-6h-ief" secondAttribute="trailing" id="JKz-YB-hNa"/>
+                            <constraint firstItem="R8S-Uo-nor" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="R1v-lD-UcE"/>
+                            <constraint firstItem="FjQ-6h-ief" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="cgb-4f-GUg"/>
+                            <constraint firstItem="FjQ-6h-ief" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-20" id="lzb-hr-Cs3"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="vKF-Es-54x" secondAttribute="bottom" id="seB-3L-4vv"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="segmentControl" destination="2Qr-pX-plD" id="1Th-Wb-MXp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="802" y="518"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="IMG_7342.JPG" width="3264" height="2448"/>
+    </resources>
+</document>
