@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name         = "AABlurModalView"
-    s.version      = "0.1.0"
+    s.version      = "0.1.1"
     s.summary      = "Simple fullscreen blur view presented as a modal with a content view"
 
     s.homepage     = "https://github.com/anas10/AABlurModalView"
