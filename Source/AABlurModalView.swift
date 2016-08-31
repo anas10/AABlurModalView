@@ -92,8 +92,12 @@ public class AABlurModalView: UIView {
 public extension UIView {
 
     public func hideBlurModalView() {
-        guard let blurModal = self.superview as? AABlurModalView else { return }
-        blurModal.hide()
+        if let blurModal = self.superview as? AABlurModalView {
+            blurModal.hide()
+        } else if let blurModal = self as? AABlurModalView {
+            blurModal.hide()
+        }
+
     }
 
 }
