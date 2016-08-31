@@ -19,6 +19,16 @@ public class AABlurModalView: UIView {
     public init(contentView: UIView, contentSize: CGSize? = nil) {
         super.init(frame: UIScreen.mainScreen().bounds)
 
+        commonInit(contentView, contentSize: contentSize)
+    }
+
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+
+        commonInit(UIView(), contentSize: nil)
+    }
+
+    private func commonInit(contentView: UIView, contentSize: CGSize? = nil) {
         self.opaque = true
         self.alpha = 1
         self.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
@@ -28,10 +38,6 @@ public class AABlurModalView: UIView {
 
         self.contentView = contentView
         self.contentSize = contentSize
-    }
-
-    public required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 
     private func setupContentView() {
