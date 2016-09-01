@@ -8,6 +8,10 @@
 
 import UIKit
 
+enum AABlurModalViewError: ErrorType {
+    case NibViewNotFound
+}
+
 public class AABlurModalView: UIView {
 
     public var contentSize : CGSize?
@@ -15,6 +19,16 @@ public class AABlurModalView: UIView {
 
     private var contentView : UIView!
     private var backgroundImage : UIImageView!
+
+    public init(nibName: String, bundle: NSBundle?) throws {
+        super.init(frame: UIScreen.mainScreen().bounds)
+
+        let nib = UINib(nibName: nibName, bundle: bundle)
+        let nibObjs = nib.instantiateWithOwner(nil, options: nil)
+        guard let nibView = nibObjs.last as? UIView else { throw AABlurModalViewError.NibViewNotFound }
+
+        commonInit(nibView, contentSize: nil)
+    }
 
     public init(contentView: UIView, contentSize: CGSize? = nil) {
         super.init(frame: UIScreen.mainScreen().bounds)
@@ -55,6 +69,7 @@ public class AABlurModalView: UIView {
 
     public func show() {
         setupContentView()
+        // TODO : Add alternative solution if the snapshot fails
         backgroundImage.image = snapshot()
         let blurEffect = UIBlurEffect(style: blurEffectStyle)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
