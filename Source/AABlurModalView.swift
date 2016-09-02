@@ -17,8 +17,8 @@ public class AABlurModalView: UIView {
     public var contentSize : CGSize?
     public var blurEffectStyle: UIBlurEffectStyle = .Dark
     public var identifier: String?
+    public var contentView : UIView!
 
-    private var contentView : UIView!
     private var backgroundImage : UIImageView!
 
     public init(nibName: String, bundle: NSBundle?) throws {
