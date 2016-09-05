@@ -117,11 +117,15 @@ public class AABlurModalView: UIView {
 
 public extension UIView {
 
-    public func hideBlurModalView() {
-        if let blurModal = self.superview as? AABlurModalView {
-            blurModal.hide()
-        } else if let blurModal = self as? AABlurModalView {
-            blurModal.hide()
+    public func hideBlurModalView(identifier: String? = nil) {
+        if identifier != nil {
+            AABlurModalView.hideBlurModalView(identifier)
+        } else {
+            if let blurModal = self.superview as? AABlurModalView {
+                blurModal.hide()
+            } else if let blurModal = self as? AABlurModalView {
+                blurModal.hide()
+            }
         }
 
     }
