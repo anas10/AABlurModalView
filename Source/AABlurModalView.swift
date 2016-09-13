@@ -14,6 +14,7 @@ enum AABlurModalViewError: ErrorType {
 
 public class AABlurModalView: UIView {
 
+    // TODO : Allow a contentSize change after init
     public var contentSize : CGSize?
     public var blurEffectStyle: UIBlurEffectStyle = .Dark
     public var identifier: String?
@@ -44,6 +45,7 @@ public class AABlurModalView: UIView {
     }
 
     public func show() {
+        self.frame = UIScreen.mainScreen().bounds
         setupContentView()
         // TODO : Add alternative solution if the snapshot fails
         backgroundImage.image = snapshot()
