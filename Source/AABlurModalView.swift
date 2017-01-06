@@ -8,32 +8,32 @@
 
 import UIKit
 
-enum AABlurModalViewError: ErrorType {
-    case NibViewNotFound
+enum AABlurModalViewError: Error {
+    case nibViewNotFound
 }
 
-public class AABlurModalView: UIView {
+open class AABlurModalView: UIView {
 
     // TODO : Allow a contentSize change after init
-    public var contentSize : CGSize?
-    public var blurEffectStyle: UIBlurEffectStyle = .Dark
-    public var identifier: String?
-    public var contentView : UIView!
+    open var contentSize : CGSize?
+    open var blurEffectStyle: UIBlurEffectStyle = .dark
+    open var identifier: String?
+    open var contentView : UIView!
 
-    private var backgroundImage : UIImageView!
+    fileprivate var backgroundImage : UIImageView!
 
-    public init(nibName: String, bundle: NSBundle?) throws {
-        super.init(frame: UIScreen.mainScreen().bounds)
+    public init(nibName: String, bundle: Bundle?) throws {
+        super.init(frame: UIScreen.main.bounds)
 
         let nib = UINib(nibName: nibName, bundle: bundle)
-        let nibObjs = nib.instantiateWithOwner(nil, options: nil)
-        guard let nibView = nibObjs.last as? UIView else { throw AABlurModalViewError.NibViewNotFound }
+        let nibObjs = nib.instantiate(withOwner: nil, options: nil)
+        guard let nibView = nibObjs.last as? UIView else { throw AABlurModalViewError.nibViewNotFound }
 
         commonInit(nibView, contentSize: nil)
     }
 
     public init(contentView: UIView, contentSize: CGSize? = nil) {
-        super.init(frame: UIScreen.mainScreen().bounds)
+        super.init(frame: UIScreen.main.bounds)
 
         commonInit(contentView, contentSize: contentSize)
     }
@@ -44,47 +44,47 @@ public class AABlurModalView: UIView {
         commonInit(UIView(), contentSize: nil)
     }
 
-    public func show() {
-        self.frame = UIScreen.mainScreen().bounds
+    open func show() {
+        self.frame = UIScreen.main.bounds
         setupContentView()
         // TODO : Add alternative solution if the snapshot fails
         backgroundImage.image = snapshot()
         let blurEffect = UIBlurEffect(style: blurEffectStyle)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = backgroundImage.bounds
-        blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
-        let vibrancyEffect = UIVibrancyEffect(forBlurEffect: blurEffect)
+        let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
         let vibrancyEffectView = UIVisualEffectView(effect: vibrancyEffect)
         vibrancyEffectView.frame = backgroundImage.bounds
-        vibrancyEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        vibrancyEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
         blurEffectView.contentView.addSubview(vibrancyEffectView)
         backgroundImage.addSubview(blurEffectView)
 
-        UIApplication.sharedApplication().delegate?.window??.addSubview(self)
+        UIApplication.shared.delegate?.window??.addSubview(self)
     }
 
-    public func hide() {
+    open func hide() {
         self.backgroundImage.subviews.forEach { $0.removeFromSuperview() }
         self.removeFromSuperview()
     }
 
-    public static func hideBlurModalView(identifier: String?) {
+    open static func hideBlurModalView(_ identifier: String?) {
         if let identifier = identifier {
-            UIApplication.sharedApplication().delegate?.window??.subviews
-                .filter { $0.isKindOfClass(AABlurModalView) }
+            UIApplication.shared.delegate?.window??.subviews
+                .filter { $0.isKind(of: AABlurModalView.self) }
                 .filter { ($0 as? AABlurModalView)?.identifier == identifier }
                 .forEach { $0.hideBlurModalView() }
         }
     }
 
-    private func commonInit(contentView: UIView, contentSize: CGSize? = nil) {
-        self.opaque = true
+    fileprivate func commonInit(_ contentView: UIView, contentSize: CGSize? = nil) {
+        self.isOpaque = true
         self.alpha = 1
-        self.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        self.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.backgroundImage = UIImageView(frame: self.bounds)
-        self.backgroundImage.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        self.backgroundImage.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.addSubview(backgroundImage)
 
         self.contentView = contentView
@@ -92,24 +92,24 @@ public class AABlurModalView: UIView {
         self.contentSize = contentSize
     }
 
-    private func setupContentView() {
+    fileprivate func setupContentView() {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(contentView)
-        let viewDict = ["cV":contentView, "view":self]
+        let viewDict : [String: Any] = ["cV":contentView, "view":self]
         let cSize = contentSize ?? contentView.frame.size
         let metrics = ["cVHeight": cSize.height, "cVWidth": cSize.width]
-        [NSLayoutConstraint.constraintsWithVisualFormat("V:[cV(cVHeight)]", options: [], metrics: metrics, views: viewDict),
-            NSLayoutConstraint.constraintsWithVisualFormat("H:[cV(cVWidth)]", options: [], metrics: metrics, views: viewDict),
-            NSLayoutConstraint.constraintsWithVisualFormat("H:[view]-(<=1)-[cV]", options: NSLayoutFormatOptions.AlignAllCenterY, metrics: nil, views: viewDict),
-            NSLayoutConstraint.constraintsWithVisualFormat("V:[view]-(<=1)-[cV]", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: viewDict)
-            ].forEach { NSLayoutConstraint.activateConstraints($0) }
+        [NSLayoutConstraint.constraints(withVisualFormat: "V:[cV(cVHeight)]", options: [], metrics: metrics, views: viewDict),
+            NSLayoutConstraint.constraints(withVisualFormat: "H:[cV(cVWidth)]", options: [], metrics: metrics, views: viewDict),
+            NSLayoutConstraint.constraints(withVisualFormat: "H:[view]-(<=1)-[cV]", options: NSLayoutFormatOptions.alignAllCenterY, metrics: nil, views: viewDict),
+            NSLayoutConstraint.constraints(withVisualFormat: "V:[view]-(<=1)-[cV]", options: NSLayoutFormatOptions.alignAllCenterX, metrics: nil, views: viewDict)
+            ].forEach { NSLayoutConstraint.activate($0) }
     }
 
-    private func snapshot() -> UIImage? {
-        let appDelegate = UIApplication.sharedApplication().delegate
+    fileprivate func snapshot() -> UIImage? {
+        let appDelegate = UIApplication.shared.delegate
         guard let window = appDelegate?.window else { return nil }
         UIGraphicsBeginImageContextWithOptions(window!.bounds.size, false, window!.screen.scale)
-        window!.drawViewHierarchyInRect(window!.bounds, afterScreenUpdates: false)
+        window!.drawHierarchy(in: window!.bounds, afterScreenUpdates: false)
         let snapshotImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return snapshotImage
@@ -119,7 +119,7 @@ public class AABlurModalView: UIView {
 
 public extension UIView {
 
-    public func hideBlurModalView(identifier: String? = nil) {
+    public func hideBlurModalView(_ identifier: String? = nil) {
         if identifier != nil {
             AABlurModalView.hideBlurModalView(identifier)
         } else {

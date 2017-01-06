@@ -16,7 +16,7 @@ class ExampleView: UIView {
         self.layer.cornerRadius = 10
     }
 
-    @IBAction func close(sender: AnyObject) {
+    @IBAction func close(_ sender: AnyObject) {
         self.hideBlurModalView()
     }
 

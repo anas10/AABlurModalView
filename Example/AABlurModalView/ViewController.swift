@@ -12,19 +12,19 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var segmentControl: UISegmentedControl!
 
-    @IBAction func show(sender: AnyObject) {
+    @IBAction func show(_ sender: AnyObject) {
         // Instanciate a view from a XIB
-        let nib = UINib(nibName: "ExampleView", bundle: NSBundle(forClass: self.dynamicType))
-        let xibObjs = nib.instantiateWithOwner(self, options: nil)
+        let nib = UINib(nibName: "ExampleView", bundle: Bundle(for: type(of: self)))
+        let xibObjs = nib.instantiate(withOwner: self, options: nil)
         let temporaryView = xibObjs.last as! UIView
 
         switch segmentControl.selectedSegmentIndex {
         case 1:
-            let blurModalView = AABlurModalView(contentView: temporaryView, contentSize: CGSizeMake(500, 500))
+            let blurModalView = AABlurModalView(contentView: temporaryView, contentSize: CGSize(width: 500, height: 500))
             blurModalView.show()
         case 2:
             let blurModalView = AABlurModalView(contentView: temporaryView)
-            blurModalView.blurEffectStyle = .Light
+            blurModalView.blurEffectStyle = .light
             blurModalView.show()
         default:
             AABlurModalView(contentView: temporaryView).show()
