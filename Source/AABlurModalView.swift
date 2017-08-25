@@ -44,7 +44,7 @@ open class AABlurModalView: UIView {
         commonInit(UIView(), contentSize: nil)
     }
 
-    open func show() {
+    open func show(_ view: UIView?? = UIApplication.shared.delegate?.window) {
         self.frame = UIScreen.main.bounds
         setupContentView()
         // TODO : Add alternative solution if the snapshot fails
@@ -62,7 +62,7 @@ open class AABlurModalView: UIView {
         blurEffectView.contentView.addSubview(vibrancyEffectView)
         backgroundImage.addSubview(blurEffectView)
 
-        UIApplication.shared.delegate?.window??.addSubview(self)
+        view??.addSubview(self)
     }
 
     open func hide() {
